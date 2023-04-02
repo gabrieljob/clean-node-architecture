@@ -3,13 +3,18 @@ import { BcryptAdapter } from '../../infra/criptography/bcrypt-adapter'
 import { AccountMongoRepository } from '../../infra/db/mondogb/account-repository/account'
 import { SignUpController } from '../../presentation/controllers/signup/signup'
 import { EmailValidatorAdapter } from '../../utils/email-validator-adapter'
-EmailValidatorAdapter
+import { LogControllerDecorator } from '../decorators/log'
+import { Controller } from '../../presentation/protocols'
 
-export const makeSignUpController = (): SignUpController => {
+export const makeSignUpController = (): Controller => {
   const salt = 12
   const emailValidatorAdapter = new EmailValidatorAdapter()
   const bcryptAdapter = new BcryptAdapter(salt)
   const accountMongoRepository = new AccountMongoRepository()
   const addAccount = new DbAddAccount(bcryptAdapter, accountMongoRepository)
-  return new SignUpController(emailValidatorAdapter, addAccount)
+  const signUpController = new SignUpController(
+    emailValidatorAdapter,
+    addAccount
+  )
+  return new LogControllerDecorator(signUpController)
 }
