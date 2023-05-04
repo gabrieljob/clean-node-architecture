@@ -3,8 +3,8 @@ import { BcryptAdapter } from '../../../infra/criptography/bcrypt-adapter'
 import { AccountMongoRepository } from '../../../infra/db/mondogb/account-repository/account'
 import { LogMongoRepository } from '../../../infra/db/mondogb/log-repository/log'
 import { SignUpController } from '../../../presentation/controllers/signup/signup'
-import { LogControllerDecorator } from '../../decorators/log'
 import { Controller } from '../../../presentation/protocols'
+import { LogControllerDecorator } from '../../decorators/log'
 import { makeSignUpValidation } from './signup-validation'
 
 export const makeSignUpController = (): Controller => {
